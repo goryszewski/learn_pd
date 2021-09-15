@@ -11,6 +11,11 @@ jobs:
 
     steps:
       - run: echo "${{ toJSON(github) }} - ${{ github.repository }} - ${{ github.event_name }}"
+        id: rr
+        with:
+          tag: $(cut -d’/’ -f3 <<< ${{ github.ref }}))
+
+      - run: echo ${{ step.rr.with.tag}}
       - name: Check Repo
         uses: actions/checkout@v2
 
