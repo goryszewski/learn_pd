@@ -11,6 +11,7 @@ jobs:
 
     steps:
       - name: Check Repo
+        run: echo test
         uses: actions/checkout@v2
 
       - name: Login to Docker Hub
