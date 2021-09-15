@@ -10,13 +10,16 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - name: test
-        run: echo "${{ toJSON(github.ref) }} - ${{ github.repository }} - ${{ github.event_name }}"
-        id: rr
-        with:
-          tag: $(cut -d’/’ -f3 <<< ${{ github.ref }}))
+      - name: Set output
+          id: vars
+          run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+      - name: Check output
+        env:
+          RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
+        run: |
+          echo $RELEASE_VERSION
+          echo ${{ steps.vars.outputs.tag }}
 
-      - run: echo ${{ steps.rr.with.tag}}
       - name: Check Repo
         uses: actions/checkout@v2
 
