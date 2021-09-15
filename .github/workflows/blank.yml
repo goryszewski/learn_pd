@@ -3,7 +3,7 @@ name: CI to Docker Hub
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - '*.*.*'
 
 jobs:
   build:
@@ -40,7 +40,7 @@ jobs:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/testciself-hosted:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/testciself-hosted:$RELEASE_VERSION
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
